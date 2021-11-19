@@ -505,8 +505,6 @@ Use SRC-BUFFER as buffer for local variables."
                 (mapconcat
                  #'identity
                  (list cmd
-                       "--target-dir "
-                       rmsbolt--temp-dir
                        "--"
                        "-g"
                        "--emit"
