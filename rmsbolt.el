@@ -498,19 +498,26 @@ Use SRC-BUFFER as buffer for local variables."
    (let* ((asm-format (buffer-local-value 'rmsbolt-asm-format src-buffer))
           (disass (buffer-local-value 'rmsbolt-disassemble src-buffer))
           (cmd (buffer-local-value 'rmsbolt-command src-buffer))
-          (cmd :in "/tmp" (mapconcat #'identity
-                          (list cmd
-                                "--"
-                                "-g"
-                                "--emit"
-                                (if disass
-                                    "link"
-                                  "asm")
-                                "-o" output-filename
-                                (when (and (not (booleanp asm-format))
-                                           (not disass))
-                                  (concat "-Cllvm-args=--x86-asm-syntax=" asm-format)))
-                          " ")))
+          (cmd (concat
+                "cd "
+                (file-name-directory src-filename)
+                " && "
+                (mapconcat
+                #'identity
+                (list cmd
+                      "--target-dir "
+                      rmsbolt--temp-dir
+                      "--"
+                      "-g"
+                      "--emit"
+                      (if disass
+                          "link"
+                        "asm")
+                      "-o" output-filename
+                      (when (and (not (booleanp asm-format))
+                                 (not disass))
+                        (concat "-Cllvm-args=--x86-asm-syntax=" asm-format)))
+                " "))))
      cmd)))
 (cl-defun rmsbolt--go-compile-cmd (&key src-buffer)
   "Process a compile command for go."
