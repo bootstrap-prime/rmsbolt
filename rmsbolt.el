@@ -506,7 +506,6 @@ Use SRC-BUFFER as buffer for local variables."
                                 (if disass
                                     "link"
                                   "asm")
-                                src-filename
                                 "-o" output-filename
                                 (when (and (not (booleanp asm-format))
                                            (not disass))
