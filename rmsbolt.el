@@ -492,14 +492,13 @@ Use SRC-BUFFER as buffer for local variables."
        (_
         (error "This Common Lisp interpreter is not supported"))))))
 (cl-defun rmsbolt--rust-compile-cmd (&key src-buffer)
-  (setq-local rmsbolt-default-directory (file-name-directory src-buffer))
   "Process a compile command for rustc."
   (rmsbolt--with-files
    src-buffer
    (let* ((asm-format (buffer-local-value 'rmsbolt-asm-format src-buffer))
           (disass (buffer-local-value 'rmsbolt-disassemble src-buffer))
           (cmd (buffer-local-value 'rmsbolt-command src-buffer))
-          (cmd (mapconcat #'identity
+          (cmd :in (file-name-directory src-buffer) (mapconcat #'identity
                           (list cmd
                                 "--"
                                 "-g"
