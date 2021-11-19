@@ -500,6 +500,7 @@ Use SRC-BUFFER as buffer for local variables."
           (cmd (buffer-local-value 'rmsbolt-command src-buffer))
           (cmd (mapconcat #'identity
                           (list cmd
+                                "--"
                                 "-g"
                                 "--emit"
                                 (if disass
@@ -850,7 +851,7 @@ return t if successful."
                           :objdumper 'cat
                           :compile-cmd-function #'rmsbolt--lisp-compile-cmd))
    (rust-mode
-    . ,(make-rmsbolt-lang :compile-cmd "rustc"
+    . ,(make-rmsbolt-lang :compile-cmd "cargo rustc"
                           :supports-asm t
                           :supports-disass nil
                           :objdumper 'objdump
@@ -858,7 +859,7 @@ return t if successful."
                           :compile-cmd-function #'rmsbolt--rust-compile-cmd))
    ;; Copy of above
    (rustic-mode
-    . ,(make-rmsbolt-lang :compile-cmd "rustc"
+    . ,(make-rmsbolt-lang :compile-cmd "cargo rustc"
                           :supports-asm t
                           :supports-disass nil
                           :objdumper 'objdump
