@@ -498,7 +498,7 @@ Use SRC-BUFFER as buffer for local variables."
    (let* ((asm-format (buffer-local-value 'rmsbolt-asm-format src-buffer))
           (disass (buffer-local-value 'rmsbolt-disassemble src-buffer))
           (cmd (buffer-local-value 'rmsbolt-command src-buffer))
-          (cmd :in (parse-namestring (file-name-directory src-buffer)) (mapconcat #'identity
+          (cmd :in (parse-namestring (file-name-directory src-filename)) (mapconcat #'identity
                           (list cmd
                                 "--"
                                 "-g"
